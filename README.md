@@ -97,7 +97,7 @@ Updating an object is a simple call to the `update` object method.
 ```php
 <?php
 # Updating a customer's email
-$customer->update(array( email='matt.perez@newwork.com' ))
+$customer->update(array( 'email'=>'matt.perez@newwork.com' ))
 ?>
 ```
 
