@@ -59,8 +59,8 @@ creating a customer using the `Payload\Account` object.
 <?php
 # Create a Customer
 $customer = Payload\Account::create(array(
-	'email'=>'matt.perez@example.com',
-	'name'=>'Matt Perez',
+    'email'=>'matt.perez@example.com',
+    'name'=>'Matt Perez',
     'type'=>'customer'
 ));
 ?>
@@ -73,7 +73,8 @@ $customer = Payload\Account::create(array(
 $payment = Payload\Transaction::create(array(
     'amount'=>100.0,
     'payment_method'=>new Payload\PaymentMethod(array(
-        'card_number'=>'4242 4242 4242 4242'
+        'card'=>array('card_number'=>'4242 4242 4242 4242'),
+        'type'=>'card'
     ))
 ));
 ?>
@@ -117,12 +118,12 @@ Use the `pl->attr()` attribute helper
 interface to write powerful queries with a little extra syntax sugar.
 
 ```php
-payments = Payload\Transaction::filter_by(
+$payments = Payload\Transaction::filter_by(
     pl->attr()->amount.gt(100),
     pl->attr()->amount.lt(200),
     pl->attr()->description.contains("Test"),
     pl->attr()->created_at.gt('2019-02-01')
-).all()
+)->all()
 ```
 
 ## Documentation
