@@ -35,9 +35,6 @@ class Utils {
     }
 
     public static function object2data($object) {
-        //if (!Utils::is_assoc_array($object))
-        //    return $object;
-
         $data = array();
         foreach ( $object as $key => $val ) {
             $data[$key] = $val;
