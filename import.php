@@ -2,24 +2,15 @@
 require(dirname(__FILE__) . '/Payload/API.php');
 require(dirname(__FILE__) . '/Payload/Utils.php');
 require(dirname(__FILE__) . '/Payload/Account.php');
-require(dirname(__FILE__) . '/Payload/Customer.php');
-require(dirname(__FILE__) . '/Payload/ProcessingAccount.php');
 require(dirname(__FILE__) . '/Payload/PaymentMethod.php');
-require(dirname(__FILE__) . '/Payload/Card.php');
-require(dirname(__FILE__) . '/Payload/BankAccount.php');
 require(dirname(__FILE__) . '/Payload/Org.php');
 require(dirname(__FILE__) . '/Payload/User.php');
 require(dirname(__FILE__) . '/Payload/Transaction.php');
-require(dirname(__FILE__) . '/Payload/Payment.php');
-require(dirname(__FILE__) . '/Payload/Deposit.php');
-require(dirname(__FILE__) . '/Payload/Refund.php');
 require(dirname(__FILE__) . '/Payload/PaymentLink.php');
 require(dirname(__FILE__) . '/Payload/Invoice.php');
 require(dirname(__FILE__) . '/Payload/BillingSchedule.php');
 require(dirname(__FILE__) . '/Payload/BillingCharge.php');
 require(dirname(__FILE__) . '/Payload/LineItem.php');
-require(dirname(__FILE__) . '/Payload/ChargeItem.php');
-require(dirname(__FILE__) . '/Payload/PaymentItem.php');
 require(dirname(__FILE__) . '/Payload/Webhook.php');
 require(dirname(__FILE__) . '/Payload/Exceptions/PayloadError.php');
 require(dirname(__FILE__) . '/Payload/Exceptions/BadRequest.php');
@@ -31,4 +22,5 @@ require(dirname(__FILE__) . '/Payload/Exceptions/ServiceUnavailable.php');
 require(dirname(__FILE__) . '/Payload/Exceptions/TooManyRequests.php');
 require(dirname(__FILE__) . '/Payload/Exceptions/Unauthorized.php');
 require(dirname(__FILE__) . '/Payload/Exceptions/UnknownResponse.php');
+
 ?>
