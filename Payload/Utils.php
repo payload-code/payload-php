@@ -35,16 +35,13 @@ class Utils {
     }
 
     public static function object2data($object) {
-        if (!Utils::is_assoc_array($object))
-            return $object;
-
         $data = array();
         foreach ( $object as $key => $val ) {
             $data[$key] = $val;
             if ( $val instanceof ARMObject ) {
                 $data[$key] = $val->data();
             } else if (is_array($val)) {
-                $object[$key] = self::object2data($val);
+                $data[$key] = self::object2data($val);
             }
         }
         return $data;
