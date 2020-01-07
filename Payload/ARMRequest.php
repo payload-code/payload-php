@@ -23,10 +23,10 @@ class ARMRequest {
         $params = array_merge(array(), $this->filters);
         
         if (count($this->attrs))
-        $params['fields'] = array_map(strval, $this->attrs);
+            $params['fields'] = array_map(strval, $this->attrs);
         
         if (count($this->group_by))
-        $params['fields'] = array_map(strval, $this->group_by);
+            $params['fields'] = array_map(strval, $this->group_by);
         
         if (isset($args['mode'])) 
             $params['mode'] = $args['mode'];
