@@ -21,12 +21,15 @@ class ARMRequest {
             $endpoint .= '/'.$args['id'];
 
         $params = array_merge(array(), $this->filters);
-
+        
         if (count($this->attrs))
-            $params['fields'] = array_map(strval, $this->attrs);
-
+        $params['fields'] = array_map(strval, $this->attrs);
+        
         if (count($this->group_by))
-            $params['fields'] = array_map(strval, $this->group_by);
+        $params['fields'] = array_map(strval, $this->group_by);
+        
+        if (isset($args['mode'])) 
+            $params['mode'] = $args['mode'];
 
         if (count($params))
             $endpoint .= '?'.http_build_query($params, '', '&');
@@ -82,12 +85,12 @@ class ARMRequest {
     }
 
     public function select(...$attrs) {
-        $this->$attrs = array_merge($this->$attrs, $attrs);
+        $this->attrs = array_merge($this->attrs, $attrs);
         return $this;
     }
 
     public function group_by(...$attrs) {
-        $this->$group_by = array_merge($this->$group_by, $attrs);
+        $this->group_by = array_merge($this->group_by, $attrs);
         return $this;
     }
 
@@ -102,14 +105,14 @@ class ARMRequest {
         if ( !Utils::is_assoc_array( $obj ) )
             $obj = array('object'=>'list', 'values'=>$obj);
         $obj = Utils::object2data($obj);
-        return self::request('DELETE', array('json'=>$obj));
+        return self::request('DELETE', array('json'=>$obj, 'mode'=>'query'));
     }
 
     public function update($obj) {
         if ( !Utils::is_assoc_array( $obj ) )
             $obj = array('object'=>'list', 'values'=>$obj);
         $obj = Utils::object2data($obj);
-        return self::request('PUT', array('json'=>$obj));
+        return self::request('PUT', array('json'=>$obj, 'mode'=>'query'));
     }
 
     public function filter_by(...$filters) {

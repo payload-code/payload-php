@@ -49,9 +49,14 @@ class ARMObject {
             array('id'=>$this->id, 'json'=>$update));
     }
 
-    public function delete($update) {
-        return (new ARMRequest(get_called_class()))->request('delete',
-            array('id'=>$this->id));
+    public function delete($update=null) {
+        if ($update !== null){
+            return (new ARMRequest(get_called_class()))->request('delete',
+            array('id'=>$update->id));
+        } else {
+            return (new ARMRequest(get_called_class()))->request('delete',
+                array('id'=>$this->id));
+        }
     }
 
     public static function get($id) {
@@ -70,6 +75,12 @@ class ARMObject {
     public static function select(...$attrs) {
         $req = new ARMRequest(get_called_class());
         return call_user_func_array(array($req, 'select'), $attrs);
+    }
+
+    public static function delete_all(...$objs) {
+
+        return (new ARMRequest(get_called_class()))->request('delete',
+            array('id'=>$this->id));
     }
 }
 ?>

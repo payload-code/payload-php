@@ -81,7 +81,7 @@ $payment = Payload\Transaction::create(array(
 ```
 
 ### Accessing Object Attributes
-
+                                        CHECK THIS LATER 
 Object attributes are accessible through dot notation.
 
 ```php
