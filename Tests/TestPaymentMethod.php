@@ -169,9 +169,9 @@ final class PaymentTest extends TestCase
     }
 
 
-    public function test_invalid_payment_method_type_bad_request()
+    public function test_invalid_payment_method_type_invalid_attributes()
     {
-        $this->expectException(Payload\Exceptions\NotFound::class);
+        $this->expectException(Payload\Exceptions\InvalidAttributes::class);
 
         Payload\Transaction::create(array(
             'amount' => 100.0,
