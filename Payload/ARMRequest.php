@@ -1,6 +1,7 @@
 <?php
 namespace Payload;
 use Payload\Utils;
+include('Exceptions.php');
 
 class ARMRequest {
 
@@ -23,10 +24,14 @@ class ARMRequest {
         $params = array_merge(array(), $this->filters);
         
         if (count($this->attrs))
-            $params['fields'] = array_map(strval, $this->attrs);
+            $params['fields'] = array_map(function ($item) {
+                return strval($item);
+            }, $this->attrs);
         
         if (count($this->group_by))
-            $params['fields'] = array_map(strval, $this->group_by);
+            $params['fields'] = array_map(function ($item) {
+                return strval($item);
+            }, $this->group_by);
         
         if (isset($args['mode'])) 
             $params['mode'] = $args['mode'];
@@ -54,7 +59,7 @@ class ARMRequest {
 
         $result = json_decode($resp, true);
         if ( $result === null ) {
-            if ( $static_code == 500 ) throw new Exceptions\InternalServerError();
+            if ( $status_code == 500 ) throw new Exceptions\InternalServerError();
             throw new Exceptions\UnknownResponse();
         }
 

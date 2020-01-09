@@ -2,6 +2,6 @@
 namespace Payload\Exceptions;
 
 class BadRequest extends PayloadError {
-	public static $status_code = 403;
+	public static $status_code = 400;
 }
 ?>
