@@ -34,14 +34,14 @@ final class BillingTest extends TestCase
     }
 
 
-    function test_billing()
+    function test_create_billing_schedule()
     {
         $this->assertEquals($this->processing_accnt->id, $this->billing_schedule->processing_id);
         $this->assertEquals(39.99, $this->billing_schedule->charges[0]->amount);
     }
 
 
-    function test_billing_frequency()
+    function test_update_billing_schedule_frequency()
     {
         $this->assertEquals($this->processing_accnt->id, $this->billing_schedule->processing_id);
         $this->assertEquals(39.99, $this->billing_schedule->charges[0]->amount);
