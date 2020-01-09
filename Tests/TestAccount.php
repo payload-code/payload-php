@@ -2,13 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
-use Payload\Exceptions;
 use Test\Fixtures as fixtures;
 
 include('Fixtures.php');
-
-pl::$api_url = 'http://api.payload-dev.co:8000';
-pl::$api_key = 'test_secret_key_3bzs0IlzojNTsM76hFOxT';
+pl::$api_key = 'your_secret_key_13ksbI5IvnaeNtsx9nf7Fb';
 
 final class AccountTest extends TestCase
 {
