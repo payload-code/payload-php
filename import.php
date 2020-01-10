@@ -12,15 +12,5 @@ require(dirname(__FILE__) . '/Payload/BillingSchedule.php');
 require(dirname(__FILE__) . '/Payload/BillingCharge.php');
 require(dirname(__FILE__) . '/Payload/LineItem.php');
 require(dirname(__FILE__) . '/Payload/Webhook.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/PayloadError.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/BadRequest.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/Forbidden.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/InternalServerError.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/InvalidAttributes.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/NotFound.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/ServiceUnavailable.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/TooManyRequests.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/Unauthorized.php');
-require(dirname(__FILE__) . '/Payload/Exceptions/UnknownResponse.php');
 
 ?>

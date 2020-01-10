@@ -20,8 +20,7 @@ class Utils {
         foreach ( $data as $key => $val ) {
             $object[$key] = $val;
             if ( Utils::is_assoc_array($val) && isset($val['object']) ) {
-                foreach (Utils::subclasses(ARMobject::class) as $cls) {
-                    #$vars = get_class_vars($cls);
+                foreach (Utils::subclasses(ARMObject::class) as $cls) {
                     if ($cls::$spec['object'] == $val['object']) {
                         $object[$key] = $cls::new($val);
                         break;

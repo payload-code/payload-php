@@ -49,6 +49,17 @@ use Payload\API as pl;
 pl::$api_key = 'secret_key_3bW9JMZtPVDOfFNzwRdfE';
 ```
 
+
+### Testing the PHP Library
+
+Tests are contained within the Tests/ directory. To run a test file enter the 
+command in terminal 
+
+```  ./vendor/bin/phpunit Tests/{__FILENAME__}.php ```
+
+Test execution options can be viewed using the ``` ./vendor/bin/phpunit ``` command.
+
+
 ### Creating an Object
 
 Interfacing with the Payload API is done primarily through Payload Objects. Below is an example of
