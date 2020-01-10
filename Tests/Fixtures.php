@@ -35,11 +35,11 @@ class Fixtures
                         'legal_entity' => array(
                             'legal_name' => 'Test',
                             'type' => 'INDIVIDUAL_SOLE_PROPRIETORSHIP',
-                            'ein' => '23 423 4234', 'street_address' => '57 Clifton Pl',
-                            'unit_number' => 'Apt 2',
-                            'city' => 'Brooklyn', 'state_province' => 'NY',
+                            'ein' => '23 423 4234', 'street_address' => '123 Example St',
+                            'unit_number' => 'Suite 1',
+                            'city' => 'New York', 'state_province' => 'NY',
                             'state_incorporated' => 'NY',
-                            'postal_code' => '11238',
+                            'postal_code' => '10002',
                             'phone_number' => '(111) 222-3333',
                             'website' => 'www.payload.co',
                             'start_date' => '05/01/2015',
@@ -49,9 +49,9 @@ class Fixtures
                                 'full_name' => 'Test Person',
                                 'email' => 'test.person@example.com', 'ssn' => '234 23 4234',
                                 'birth_date' => '06/20/1985', 'title' => 'CEO', 'ownership' => '100',
-                                'street_address' => '4455 Carver Woods Drive, Suite 200',
-                                'unit_number' => '2408', 'city' => 'Cincinnati', 'state_province' => 'OH',
-                                'postal_code' => '45242', 'phone_number' => '(111) 222-3333', 'type' => 'owner'
+                                'street_address' => '123 Main St',
+                                'unit_number' => '#1A', 'city' => 'New York', 'state_province' => 'NY',
+                                'postal_code' => '10001', 'phone_number' => '(111) 222-3333', 'type' => 'owner'
                             )]
                         )
                     ))
