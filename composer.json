@@ -13,6 +13,8 @@
         "php": ">=5.3.0",
         "ext-curl": "*"
     },
+    "minimum-stability": "stable",
+    "version": "0.1.0",
     "autoload": {
         "psr-4": {
             "Payload\\": "Payload/"
