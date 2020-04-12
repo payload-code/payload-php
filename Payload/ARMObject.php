@@ -26,7 +26,7 @@ class ARMObject {
         if (isset($this->_data[$name]))
             return $this->_data[$name];
         else
-            throw new \Exception("$name does not exists");
+            throw new \Exception("$name does not exist");
     }
 
     public function json() {
