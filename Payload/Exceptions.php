@@ -1,7 +1,7 @@
 <?php
 require(dirname(__FILE__) . '/Exceptions/PayloadError.php');
 require(dirname(__FILE__) . '/Exceptions/BadRequest.php');
-require(dirname(__FILE__) . '/Exceptions/Forbidden.php');
+require(dirname(__FILE__) . '/Exceptions/NotPermitted.php');
 require(dirname(__FILE__) . '/Exceptions/InternalServerError.php');
 require(dirname(__FILE__) . '/Exceptions/InvalidAttributes.php');
 require(dirname(__FILE__) . '/Exceptions/NotFound.php');

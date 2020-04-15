@@ -22,18 +22,18 @@ class ARMRequest {
             $endpoint .= '/'.$args['id'];
 
         $params = array_merge(array(), $this->filters);
-        
+
         if (count($this->attrs))
             $params['fields'] = array_map(function ($item) {
                 return strval($item);
             }, $this->attrs);
-        
+
         if (count($this->group_by))
             $params['fields'] = array_map(function ($item) {
                 return strval($item);
             }, $this->group_by);
-        
-        if (isset($args['mode'])) 
+
+        if (isset($args['mode']))
             $params['mode'] = $args['mode'];
 
         if (count($params))
@@ -76,9 +76,9 @@ class ARMRequest {
         if ( $result['object'] == 'error' ) {
             foreach( Utils::subclasses(Exceptions\PayloadError::class) as $exc ) {
                 if ( $exc::getClassName() != $result['error_type']) continue;
-                throw new $exc($result['description']);
+                throw new $exc($result['error_description']);
             }
-            throw new Exceptions\BadRequest($result['description']);
+            throw new Exceptions\BadRequest($result['error_description']);
         }
 
         throw new Exceptions\UnknownResponse();

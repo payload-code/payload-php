@@ -22,7 +22,7 @@ final class AccountTest extends TestCase
     public function test_delete()
     {
         $this->expectException(Payload\Exceptions\NotFound::class);
-        
+
         $this->customer_accnt->delete();
         Payload\Account::get($this->customer_accnt->id);
     }
@@ -61,7 +61,7 @@ final class AccountTest extends TestCase
         $this->assertEquals($rand_email2, $get_account_2->email);
     }
 
-    
+
     public function test_get_processing_account()
     {
         $this->assertSame('pending', $this->processing_accnt->processing['status']);
