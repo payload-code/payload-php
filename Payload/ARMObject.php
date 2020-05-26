@@ -23,7 +23,7 @@ class ARMObject {
     }
 
     public function __get($name) {
-        if (isset($this->_data[$name])||$this->_data[$name]==null)
+        if (array_key_exists($name, $this->_data))
             return $this->_data[$name];
         else
             throw new \Exception("$name does not exist");

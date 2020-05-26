@@ -40,7 +40,7 @@ class ARMRequest {
             $endpoint .= '?'.http_build_query($params, '', '&');
 
         $req = curl_init(API::$api_url . $endpoint);
-        curl_setopt($req, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($req, CURLOPT_CUSTOMREQUEST, strtoupper($method));
         curl_setopt($req, CURLOPT_USERPWD, API::$api_key . ':');
         curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
 
