@@ -121,20 +121,20 @@ Objects can be selected using any of their attributes.
 <?php
 # Select a customer by email
 $customers = Payload\Account::filter_by(
-    pl->attr()->email->eq('matt.perez@example.com')
+    pl::attr()->email->eq('matt.perez@example.com')
 );
 ?>
 ```
 
-Use the `pl->attr()` attribute helper
+Use the `pl::attr()` attribute helper
 interface to write powerful queries with a little extra syntax sugar.
 
 ```php
 $payments = Payload\Transaction::filter_by(
-    pl->attr()->amount->gt(100),
-    pl->attr()->amount->lt(200),
-    pl->attr()->description->contains("Test"),
-    pl->attr()->created_at->gt('2019-02-01')
+    pl::attr()->amount->gt(100),
+    pl::attr()->amount->lt(200),
+    pl::attr()->description->contains("Test"),
+    pl::attr()->created_at->gt('2019-02-01')
 )->all()
 ```
 
