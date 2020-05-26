@@ -15,7 +15,7 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
-    "version": "0.2.2",
+    "version": "0.2.3",
     "autoload": {
         "psr-4": {
             "Payload\\": "Payload/"
