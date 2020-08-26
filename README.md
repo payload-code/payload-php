@@ -52,8 +52,8 @@ pl::$api_key = 'secret_key_3bW9JMZtPVDOfFNzwRdfE';
 
 ### Testing the PHP Library
 
-Tests are contained within the Tests/ directory. To run a test file enter the 
-command in terminal 
+Tests are contained within the Tests/ directory. To run a test file enter the
+command in terminal
 
 ```  ./vendor/bin/phpunit Tests/{__FILENAME__}.php ```
 
@@ -63,16 +63,15 @@ Test execution options can be viewed using the ``` ./vendor/bin/phpunit ``` comm
 ### Creating an Object
 
 Interfacing with the Payload API is done primarily through Payload Objects. Below is an example of
-creating a customer using the `Payload\Account` object.
+creating a customer using the `Payload\Customer` object.
 
 
 ```php
 <?php
 # Create a Customer
-$customer = Payload\Account::create(array(
+$customer = Payload\Customer::create(array(
     'email'=>'matt.perez@example.com',
-    'name'=>'Matt Perez',
-    'type'=>'customer'
+    'name'=>'Matt Perez'
 ));
 ?>
 ```
@@ -93,7 +92,7 @@ $payment = Payload\Transaction::create(array(
 ```
 
 ### Accessing Object Attributes
-                                         
+
 Object attributes are accessible through dot notation.
 
 ```php
@@ -120,7 +119,7 @@ Objects can be selected using any of their attributes.
 ```php
 <?php
 # Select a customer by email
-$customers = Payload\Account::filter_by(
+$customers = Payload\Customer::filter_by(
     pl::attr()->email->eq('matt.perez@example.com')
 );
 ?>

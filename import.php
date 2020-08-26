@@ -2,6 +2,8 @@
 require(dirname(__FILE__) . '/Payload/API.php');
 require(dirname(__FILE__) . '/Payload/Utils.php');
 require(dirname(__FILE__) . '/Payload/Account.php');
+require(dirname(__FILE__) . '/Payload/Customer.php');
+require(dirname(__FILE__) . '/Payload/ProcessingAccount.php');
 require(dirname(__FILE__) . '/Payload/PaymentMethod.php');
 require(dirname(__FILE__) . '/Payload/Org.php');
 require(dirname(__FILE__) . '/Payload/User.php');
