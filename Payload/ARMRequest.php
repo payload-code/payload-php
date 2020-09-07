@@ -76,9 +76,9 @@ class ARMRequest {
         if ( $result['object'] == 'error' ) {
             foreach( Utils::subclasses(Exceptions\PayloadError::class) as $exc ) {
                 if ( $exc::getClassName() != $result['error_type']) continue;
-                throw new $exc($result['error_description']);
+                throw new $exc($result['error_description'], $result);
             }
-            throw new Exceptions\BadRequest($result['error_description']);
+            throw new Exceptions\BadRequest($result['error_description'], $result);
         }
 
         throw new Exceptions\UnknownResponse();
