@@ -79,8 +79,12 @@ class ARMObject {
 
     public static function delete_all(...$objs) {
 
+        $func = function($value) {
+            return $value->id;
+        };
+
         return (new ARMRequest(get_called_class()))->request('delete',
-            array('id'=>$this->id));
+            array('id'=>join("|",array_map($func, $objs)));
     }
 }
 ?>
