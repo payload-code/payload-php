@@ -84,7 +84,7 @@ class ARMObject {
         };
 
         return (new ARMRequest(get_called_class()))->request('delete',
-            array('id'=>join("|",array_map($func, $objs)));
+            array('id'=>join("|",array_map($func, $objs))));
     }
 }
 ?>
