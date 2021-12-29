@@ -6,6 +6,7 @@ require_once('ARMRequest.php');
 class ARMObject {
     private static $_object_cache = array();
     public static $spec = array();
+    public static $type = null;
 
     public static function new($data) {
         $class = get_called_class();
@@ -64,11 +65,17 @@ class ARMObject {
     }
 
     public static function filter_by(...$filters) {
+        if ( isset(get_called_class()::$spec['polymorphic_type']) )
+            array_push($filters, ['type' => get_called_class()::$spec['polymorphic_type']]);
+
         $req = new ARMRequest(get_called_class());
         return call_user_func_array(array($req, 'filter_by'), $filters);
     }
 
     public static function create($obj) {
+        if ( isset(get_called_class()::$spec['polymorphic_type']) )
+            $obj['type'] = get_called_class()::$spec['polymorphic_type'];
+
         return (new ARMRequest(get_called_class()))->create($obj);
     }
 
