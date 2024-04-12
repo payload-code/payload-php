@@ -16,5 +16,6 @@ require(dirname(__FILE__) . '/Payload/LineItem.php');
 require(dirname(__FILE__) . '/Payload/Webhook.php');
 require(dirname(__FILE__) . '/Payload/PaymentActivation.php');
 require(dirname(__FILE__) . '/Payload/ClientToken.php');
+require(dirname(__FILE__) . '/Payload/OAuthToken.php');
 
 ?>

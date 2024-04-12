@@ -116,7 +116,10 @@ class ARMRequest {
     public function update($obj) {
         if ( !Utils::is_assoc_array( $obj ) )
             $obj = array('object'=>'list', 'values'=>$obj);
-        $obj = Utils::object2data($obj);
+        if ( $obj instanceof ARMObject )
+            $obj = $obj->data();
+        else
+            $obj = Utils::object2data($obj);
         return self::request('PUT', array('json'=>$obj, 'mode'=>'query'));
     }
 

@@ -1,29 +1,35 @@
 {
-    "name": "payload/payload-api",
-    "type": "library",
-    "description": "Payload PHP Library",
-    "keywords": ["payload", "payments", "api"],
-    "homepage": "http://github.com/payload-code/payload-php",
-    "license": "MIT",
-    "authors": [{
-        "name": "Payload",
-        "email": "help@payload.co"
-    }],
-    "require": {
-        "php": ">=5.3.0",
-        "ext-curl": "*"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
-    "version": "0.3.5",
-    "autoload": {
-        "psr-4": {
-            "Payload\\": "Payload/"
-        }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.5",
-        "phpcompatibility/php-compatibility": "*",
-        "squizlabs/php_codesniffer": "3.*"
+  "name": "payload/payload-api",
+  "type": "library",
+  "description": "Payload PHP Library",
+  "keywords": [
+    "payload",
+    "payments",
+    "api"
+  ],
+  "homepage": "http://github.com/payload-code/payload-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Payload",
+      "email": "help@payload.co"
     }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "ext-curl": "*"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "version": "0.3.6",
+  "autoload": {
+    "psr-4": {
+      "Payload\\": "Payload/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.5",
+    "phpcompatibility/php-compatibility": "*",
+    "squizlabs/php_codesniffer": "3.*"
+  }
 }
