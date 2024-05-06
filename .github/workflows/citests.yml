@@ -1,0 +1,22 @@
+name: Payload PHP Package
+
+on:
+  pull_request:
+    branches: ["master"]
+  push:
+    branches: ["master"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Installing dependencies
+      uses: php-actions/composer@v6
+      php_extensions: "xml curl dom mbstring"
+    - name: Running unit test
+      uses: php-actions/phpunit@v3
+      with:
+        args: "Tests"
+      env:
+        API_KEY: ${{ secrets.API_KEY }}

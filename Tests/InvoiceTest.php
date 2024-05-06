@@ -5,7 +5,6 @@ use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
 include('Fixtures.php');
-pl::$api_key = 'your_secret_key_13ksbI5IvnaeNtsx9nf7Fb';
 
 final class InvoiceTest extends TestCase
 {
@@ -16,6 +15,7 @@ final class InvoiceTest extends TestCase
     protected function setUp(): void
     {
 
+        fixtures::init_payload();
         $this->customer_accnt = fixtures::customer_accnt_data();
         $this->processing_accnt = fixtures::processing_accnt_data();
 
@@ -34,7 +34,7 @@ final class InvoiceTest extends TestCase
     }
     public function test_create_invoice()
     {
-        $this->assertEquals('Tue, 01 Jan 2019 00:00:00 GMT', $this->invoice->due_date);
+        $this->assertEquals('2019-01-01', $this->invoice->due_date);
         $this->assertEquals('unpaid', $this->invoice->status);
     }
 
@@ -42,7 +42,7 @@ final class InvoiceTest extends TestCase
     public function test_pay_invoice()
     {
 
-        $this->assertEquals('Tue, 01 Jan 2019 00:00:00 GMT', $this->invoice->due_date);
+        $this->assertEquals('2019-01-01', $this->invoice->due_date);
         $this->assertEquals('unpaid', $this->invoice->status);
 
         $card_payment = Payload\Transaction::create(array(
@@ -51,7 +51,7 @@ final class InvoiceTest extends TestCase
             'customer_id' => $this->customer_accnt->id,
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
         ));
 

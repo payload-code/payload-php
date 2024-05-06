@@ -5,7 +5,6 @@ use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
 include('Fixtures.php');
-pl::$api_key = 'your_secret_key_13ksbI5IvnaeNtsx9nf7Fb';
 
 final class PaymentTest extends TestCase
 {
@@ -16,6 +15,7 @@ final class PaymentTest extends TestCase
 
     protected function setUp(): void
     {
+        fixtures::init_payload();
         $this->card_payment = fixtures::card_payment_data();
         $this->bank_payment = fixtures::bank_payment_data();
         $this->processing_accnt = fixtures::processing_accnt_data();
@@ -46,7 +46,7 @@ final class PaymentTest extends TestCase
             'description' => $rand_description,
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
         ));
 
@@ -109,7 +109,7 @@ final class PaymentTest extends TestCase
             'amount' => 10,
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
             'processing_id' => $this->processing_accnt->id
         ));
@@ -154,12 +154,12 @@ final class PaymentTest extends TestCase
 
     public function test_convenience_fee()
     {
-        $payment = Payload\Transaction::select('*', 'conv_fee')->create(array(
+        $payment = Payload\Transaction::select('*', 'fee', 'conv_fee')->create(array(
             'amount' => 100.0,
             'type' => 'payment',
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
         ));
 
@@ -176,8 +176,8 @@ final class PaymentTest extends TestCase
             'amount' => 100.0,
             'type' => 'payment',
             'payment_method' => new Payload\PaymentMethod(array(
-                'type' => 'invalid',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'type' => 'bank_account',
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
         ));
     }

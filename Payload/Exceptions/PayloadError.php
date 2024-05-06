@@ -9,7 +9,7 @@ class PayloadError extends \Exception {
     }
 
     public function __construct($message=null, $error = null) {
-        if ( $error )
+        if ( $error && array_key_exists("details", $error) )
             $this->details = $error["details"];
         return parent::__construct($message);
 
