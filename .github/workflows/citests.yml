@@ -13,7 +13,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: Installing dependencies
       uses: php-actions/composer@v6
-      php_extensions: "xml curl dom mbstring"
+      with:
+        php_extensions: "xml curl dom mbstring"
     - name: Running unit test
       uses: php-actions/phpunit@v3
       with:
