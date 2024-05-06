@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
-include('Fixtures.php');
+include_once('Fixtures.php');
 
 final class AccountTest extends TestCase
 {
