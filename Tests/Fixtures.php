@@ -41,7 +41,7 @@ class Fixtures
                             'state_incorporated' => 'NY',
                             'postal_code' => '10002',
                             'phone_number' => '(111) 222-3333',
-                            'website' => 'www.payload.co',
+                            'website' => 'https://payload.com',
                             'start_date' => '05/01/2015',
                             'contact_name' => 'Test Person', 'contact_email' => 'test.person@example.com',
                             'contact_title' => 'VP',

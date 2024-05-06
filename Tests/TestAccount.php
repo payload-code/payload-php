@@ -97,7 +97,7 @@ final class AccountTest extends TestCase
         $this->assertEquals(3, count($customers));
         $this->assertTrue($customers[0]->created_at < $customers[1]->created_at );
         $this->assertTrue($customers[1]->created_at < $customers[2]->created_at );
-        }
+    }
 
 
     public function test_update_cust()
