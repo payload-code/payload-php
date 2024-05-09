@@ -4,8 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
-include('Fixtures.php');
-pl::$api_key = 'your_secret_key_13ksbI5IvnaeNtsx9nf7Fb';
+include_once('Fixtures.php');
 
 final class BillingTest extends TestCase
 {
@@ -15,6 +14,7 @@ final class BillingTest extends TestCase
 
     protected function setUp(): void
     {
+        fixtures::init_payload();
         $this->customer_accnt = fixtures::customer_accnt_data();
         $this->processing_accnt = fixtures::processing_accnt_data();
         $this->billing_schedule = Payload\BillingSchedule::create(array(

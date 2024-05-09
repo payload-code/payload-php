@@ -12,7 +12,7 @@
   "authors": [
     {
       "name": "Payload",
-      "email": "help@payload.co"
+      "email": "help@payload.com"
     }
   ],
   "require": {
@@ -21,7 +21,7 @@
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
-  "version": "0.3.6",
+  "version": "0.3.7",
   "autoload": {
     "psr-4": {
       "Payload\\": "Payload/"

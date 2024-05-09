@@ -4,8 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
-include('Fixtures.php');
-pl::$api_key = 'your_secret_key_13ksbI5IvnaeNtsx9nf7Fb';
+include_once('Fixtures.php');
 
 final class AccountTest extends TestCase
 {
@@ -15,6 +14,7 @@ final class AccountTest extends TestCase
 
     protected function setUp(): void
     {
+        fixtures::init_payload();
         $this->customer_accnt = fixtures::customer_accnt_data();
         $this->processing_accnt = fixtures::processing_accnt_data();
     }
@@ -24,7 +24,7 @@ final class AccountTest extends TestCase
         $this->expectException(Payload\Exceptions\NotFound::class);
 
         $this->customer_accnt->delete();
-        Payload\Account::get($this->customer_accnt->id);
+        Payload\Customer::get($this->customer_accnt->id);
     }
 
     public function test_create_mult_accounts()
@@ -36,24 +36,22 @@ final class AccountTest extends TestCase
         $rand_email2 = sha1($str2) . '@example.com';
 
         Payload\Account::create(array(
-            new Payload\Account(array(
+            new Payload\Customer(array(
                 'email' => $rand_email1,
                 'name' => 'Manny Perez',
-                'type' => 'customer'
             )),
-            new Payload\Account(array(
+            new Payload\Customer(array(
                 'email' => $rand_email2,
                 'name' => 'Andy Kearney',
-                'type' => 'customer'
             ))
         ));
 
-        $get_account_1 = Payload\Account::filter_by(
+        $get_account_1 = Payload\Customer::filter_by(
             pl::attr()->email->eq($rand_email1)
         )->all()[0];
 
 
-        $get_account_2 = Payload\Account::filter_by(
+        $get_account_2 = Payload\Customer::filter_by(
             pl::attr()->email->eq($rand_email2)
         )->all()[0];
 
@@ -64,31 +62,28 @@ final class AccountTest extends TestCase
 
     public function test_get_processing_account()
     {
-        $this->assertSame('pending', $this->processing_accnt->processing['status']);
+        $this->assertSame('pending', $this->processing_accnt->status);
     }
 
 
     public function test_paging_and_ordering_results()
     {
         Payload\Account::create(array(
-            new Payload\Account(array(
+            new Payload\Customer(array(
                 'email' => 'account1@example.com',
                 'name' => 'Randy Robson',
-                'type' => 'customer'
             )),
-            new Payload\Account(array(
+            new Payload\Customer(array(
                 'email' => 'account2@example.com',
                 'name' => 'Brandy Bobson',
-                'type' => 'customer'
             )),
-            new Payload\Account(array(
+            new Payload\Customer(array(
                 'email' => 'account3@example.com',
                 'name' => 'Mandy Johnson',
-                'type' => 'customer'
             ))
         ));
 
-        $customers = Payload\Account::filter_by(array(
+        $customers = Payload\Customer::filter_by(array(
             'order_by' => 'created_at',
             'limit' => 3,
             'offset' => 1
@@ -97,7 +92,7 @@ final class AccountTest extends TestCase
         $this->assertEquals(3, count($customers));
         $this->assertTrue($customers[0]->created_at < $customers[1]->created_at );
         $this->assertTrue($customers[1]->created_at < $customers[2]->created_at );
-        }
+    }
 
 
     public function test_update_cust()
@@ -136,10 +131,9 @@ final class AccountTest extends TestCase
 
     public function test_create_cust()
     {
-        $account = Payload\Account::create(array(
+        $account = Payload\Customer::create(array(
             'email' => 'joe.schmoe@example.com',
             'name' => 'Joe Schmoe',
-            'type' => 'customer'
         ));
 
         $this->assertSame('joe.schmoe@example.com', $account->email);

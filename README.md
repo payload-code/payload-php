@@ -1,6 +1,6 @@
 # Payload PHP Library
 
-A PHP library for integrating [Payload](https://payload.co).
+A PHP library for integrating [Payload](https://payload.com).
 
 ## Installation
 
@@ -140,4 +140,4 @@ $payments = Payload\Transaction::filter_by(
 ## Documentation
 
 To get further information on Payload's PHP library and API capabilities,
-visit the unabridged [Payload Documentation](https://docs.payload.co/?php).
+visit the unabridged [Payload Documentation](https://docs.payload.com/?php).

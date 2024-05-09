@@ -4,8 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
-include('Fixtures.php');
-pl::$api_key = 'your_secret_key_13ksbI5IvnaeNtsx9nf7Fb';
+include_once('Fixtures.php');
 
 final class TransactionTest extends TestCase
 {
@@ -17,6 +16,7 @@ final class TransactionTest extends TestCase
 
     protected function setUp(): void
     {
+        fixtures::init_payload();
         $this->customer_accnt = fixtures::customer_accnt_data();
         $this->processing_accnt = fixtures::processing_accnt_data();
         $this->card_payment = fixtures::card_payment_data();
@@ -35,7 +35,7 @@ final class TransactionTest extends TestCase
             'description' => $rand_description,
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
         ));
 
@@ -65,7 +65,7 @@ final class TransactionTest extends TestCase
             'amount' => 10,
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             )),
             'processing_id' => $this->processing_accnt->id
         ));
@@ -90,7 +90,7 @@ final class TransactionTest extends TestCase
             'amount' => 10,
             'payment_method' => new Payload\PaymentMethod(array(
                 'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242')
+                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
             ))
         ));
         $payments = Payload\Transaction::filter_by(array('status' => 'processed', 'type' => 'payment'))->all();
