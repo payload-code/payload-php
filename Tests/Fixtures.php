@@ -52,6 +52,7 @@ class Fixtures
                     'start_date' => '05/01/2015',
                     'contact_name' => 'Test Person', 'contact_email' => 'test.person@example.com',
                     'contact_title' => 'VP',
+                    'country' => 'US',
                     'owners' => [array(
                         'full_name' => 'Test Person',
                         'email' => 'test.person@example.com', 'ssn' => '234 23 4234',
