@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
-include_once('Fixtures.php');
+require_once 'Fixtures.php';
 
 final class AccountTest extends TestCase
 {
@@ -35,16 +35,22 @@ final class AccountTest extends TestCase
         $str2 = rand();
         $rand_email2 = sha1($str2) . '@example.com';
 
-        Payload\Account::create(array(
-            new Payload\Customer(array(
-                'email' => $rand_email1,
-                'name' => 'Manny Perez',
-            )),
-            new Payload\Customer(array(
-                'email' => $rand_email2,
-                'name' => 'Andy Kearney',
-            ))
-        ));
+        Payload\Account::create(
+            [
+                new Payload\Customer(
+                    [
+                        'email' => $rand_email1,
+                        'name'  => 'Manny Perez',
+                    ]
+                ),
+                new Payload\Customer(
+                    [
+                        'email' => $rand_email2,
+                        'name'  => 'Andy Kearney',
+                    ]
+                ),
+            ]
+        );
 
         $get_account_1 = Payload\Customer::filter_by(
             pl::attr()->email->eq($rand_email1)
@@ -68,30 +74,40 @@ final class AccountTest extends TestCase
 
     public function test_paging_and_ordering_results()
     {
-        Payload\Account::create(array(
-            new Payload\Customer(array(
-                'email' => 'account1@example.com',
-                'name' => 'Randy Robson',
-            )),
-            new Payload\Customer(array(
-                'email' => 'account2@example.com',
-                'name' => 'Brandy Bobson',
-            )),
-            new Payload\Customer(array(
-                'email' => 'account3@example.com',
-                'name' => 'Mandy Johnson',
-            ))
-        ));
+        Payload\Account::create(
+            [
+                new Payload\Customer(
+                    [
+                        'email' => 'account1@example.com',
+                        'name'  => 'Randy Robson',
+                    ]
+                ),
+                new Payload\Customer(
+                    [
+                        'email' => 'account2@example.com',
+                        'name'  => 'Brandy Bobson',
+                    ]
+                ),
+                new Payload\Customer(
+                    [
+                        'email' => 'account3@example.com',
+                        'name'  => 'Mandy Johnson',
+                    ]
+                ),
+            ]
+        );
 
-        $customers = Payload\Customer::filter_by(array(
-            'order_by' => 'created_at',
-            'limit' => 3,
-            'offset' => 1
-        ))->all();
+        $customers = Payload\Customer::filter_by(
+            [
+                'order_by' => 'created_at',
+                'limit'    => 3,
+                'offset'   => 1,
+            ]
+        )->all();
 
         $this->assertEquals(3, count($customers));
-        $this->assertTrue($customers[0]->created_at <= $customers[1]->created_at );
-        $this->assertTrue($customers[1]->created_at <= $customers[2]->created_at );
+        $this->assertTrue($customers[0]->created_at <= $customers[1]->created_at);
+        $this->assertTrue($customers[1]->created_at <= $customers[2]->created_at);
     }
 
 
@@ -99,7 +115,7 @@ final class AccountTest extends TestCase
     {
         $this->assertNotNull($this->customer_accnt->id);
 
-        $this->customer_accnt->update(array('email' => 'test2@example.com'));
+        $this->customer_accnt->update(['email' => 'test2@example.com']);
 
         $this->assertSame('test2@example.com', $this->customer_accnt->email);
     }
@@ -131,10 +147,12 @@ final class AccountTest extends TestCase
 
     public function test_create_cust()
     {
-        $account = Payload\Customer::create(array(
-            'email' => 'joe.schmoe@example.com',
-            'name' => 'Joe Schmoe',
-        ));
+        $account = Payload\Customer::create(
+            [
+                'email' => 'joe.schmoe@example.com',
+                'name'  => 'Joe Schmoe',
+            ]
+        );
 
         $this->assertSame('joe.schmoe@example.com', $account->email);
 

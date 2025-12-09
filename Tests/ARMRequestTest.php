@@ -7,17 +7,19 @@ namespace Payload {
     $GLOBALS['curl_handle_counter'] = 0;
 
 
-    function curl_init($url = null) {
+    function curl_init($url = null)
+    {
         $GLOBALS['curl_handle_counter']++;
         $handle = 'mock_handle_' . $GLOBALS['curl_handle_counter'];
         $GLOBALS['curl_options'][$handle] = [
             'url' => $url,
-            'options' => []
+            'options' => [],
         ];
         return $handle;
     }
 
-    function curl_setopt($handle, $option, $value) {
+    function curl_setopt($handle, $option, $value)
+    {
         if (!isset($GLOBALS['curl_options'][$handle])) {
             $GLOBALS['curl_options'][$handle] = ['options' => []];
         }
@@ -25,24 +27,27 @@ namespace Payload {
         return true;
     }
 
-    function curl_exec($handle) {
+    function curl_exec($handle)
+    {
         // Return a mock successful response
         return json_encode([
             'object' => 'customer',
             'id' => 'cust_test123',
             'email' => 'test@example.com',
-            'name' => 'Test Customer'
+            'name' => 'Test Customer',
         ]);
     }
 
-    function curl_getinfo($handle, $option = null) {
+    function curl_getinfo($handle, $option = null)
+    {
         if ($option === CURLINFO_HTTP_CODE) {
             return 200;
         }
         return null;
     }
 
-    function curl_close($handle) {
+    function curl_close($handle)
+    {
         return true;
     }
 }
@@ -92,10 +97,10 @@ namespace {
             Payload\API::$api_version = null;
 
             // Make a request
-            $customer = Payload\Customer::create(array(
+            $customer = Payload\Customer::create([
                 'email' => 'test@example.com',
                 'name' => 'Test Customer',
-            ));
+            ]);
 
             // Get the curl options that were set
             $curl_options = $GLOBALS['curl_options'];
@@ -123,10 +128,10 @@ namespace {
             Payload\API::$api_version = 'v2.0';
 
             // Make a request
-            $customer = Payload\Customer::create(array(
+            $customer = Payload\Customer::create([
                 'email' => 'test@example.com',
                 'name' => 'Test Customer',
-            ));
+            ]);
 
             // Get the curl options that were set
             $curl_options = $GLOBALS['curl_options'];
@@ -163,10 +168,12 @@ namespace {
             Payload\API::$api_version = 'v2.0';
 
             // Make a request with JSON body
-            $customer = Payload\Customer::create(array(
-                'email' => 'test@example.com',
-                'name' => 'Test Customer',
-            ));
+            $customer = Payload\Customer::create(
+                [
+                    'email' => 'test@example.com',
+                    'name'  => 'Test Customer',
+                ]
+            );
 
             // Get the curl options that were set
             $curl_options = $GLOBALS['curl_options'];
@@ -222,10 +229,12 @@ namespace {
                 Payload\API::$api_version = $version;
 
                 // Make a request
-                $customer = Payload\Customer::create(array(
-                    'email' => 'test@example.com',
-                    'name' => 'Test Customer',
-                ));
+                $customer = Payload\Customer::create(
+                    [
+                        'email' => 'test@example.com',
+                        'name'  => 'Test Customer',
+                    ]
+                );
 
                 // Get the curl options
                 $curl_options = $GLOBALS['curl_options'];
