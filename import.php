@@ -17,5 +17,17 @@ require(dirname(__FILE__) . '/Payload/Webhook.php');
 require(dirname(__FILE__) . '/Payload/PaymentActivation.php');
 require(dirname(__FILE__) . '/Payload/ClientToken.php');
 require(dirname(__FILE__) . '/Payload/OAuthToken.php');
+require(dirname(__FILE__) . '/Payload/Profile.php');
+require(dirname(__FILE__) . '/Payload/BillingItem.php');
+require(dirname(__FILE__) . '/Payload/Intent.php');
+require(dirname(__FILE__) . '/Payload/InvoiceItem.php');
+require(dirname(__FILE__) . '/Payload/PaymentAllocation.php');
+require(dirname(__FILE__) . '/Payload/Entity.php');
+require(dirname(__FILE__) . '/Payload/Stakeholder.php');
+require(dirname(__FILE__) . '/Payload/ProcessingAgreement.php');
+require(dirname(__FILE__) . '/Payload/Transfer.php');
+require(dirname(__FILE__) . '/Payload/TransactionOperation.php');
+require(dirname(__FILE__) . '/Payload/CheckFront.php');
+require(dirname(__FILE__) . '/Payload/CheckBack.php');
 
 ?>
