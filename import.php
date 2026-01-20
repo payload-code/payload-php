@@ -15,6 +15,7 @@ require(dirname(__FILE__) . '/Payload/BillingCharge.php');
 require(dirname(__FILE__) . '/Payload/LineItem.php');
 require(dirname(__FILE__) . '/Payload/Webhook.php');
 require(dirname(__FILE__) . '/Payload/PaymentActivation.php');
+require(dirname(__FILE__) . '/Payload/AccessToken.php');
 require(dirname(__FILE__) . '/Payload/ClientToken.php');
 require(dirname(__FILE__) . '/Payload/OAuthToken.php');
 require(dirname(__FILE__) . '/Payload/Profile.php');
@@ -29,5 +30,7 @@ require(dirname(__FILE__) . '/Payload/Transfer.php');
 require(dirname(__FILE__) . '/Payload/TransactionOperation.php');
 require(dirname(__FILE__) . '/Payload/CheckFront.php');
 require(dirname(__FILE__) . '/Payload/CheckBack.php');
+require(dirname(__FILE__) . '/Payload/ProcessingRule.php');
+require(dirname(__FILE__) . '/Payload/ProcessingSettings.php');
 
 ?>

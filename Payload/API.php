@@ -3,7 +3,7 @@ namespace Payload;
 require_once('Attr.php');
 
 class API {
-    const version = '0.3.7';
+    const version = '0.4.0';
     public static $api_key;
     public static $api_url = 'https://api.payload.com';
     public static $api_version;
