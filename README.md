@@ -49,6 +49,15 @@ use Payload\API as pl;
 pl::$api_key = 'secret_key_3bW9JMZtPVDOfFNzwRdfE';
 ```
 
+### API Version
+
+You can specify the API version to use by setting the `api_version` property.
+
+```php
+use Payload\API as pl;
+pl::$api_version = 'v2.0';
+```
+
 
 ### Testing the PHP Library
 
@@ -136,6 +145,55 @@ $payments = Payload\Transaction::filter_by(
     pl::attr()->created_at->gt('2019-02-01')
 )->all()
 ```
+
+## Available Objects
+
+The following Payload objects are available in this library:
+
+**Core Objects:**
+- `Payload\Customer` (v1 only)
+- `Payload\Transaction`
+- `Payload\PaymentMethod`
+- `Payload\Account`
+- `Payload\ProcessingAccount` (v1 only)
+
+**Billing & Invoicing:**
+- `Payload\Invoice`
+- `Payload\InvoiceItem`
+- `Payload\BillingSchedule`
+- `Payload\BillingCharge` (v1 only)
+- `Payload\BillingItem`
+- `Payload\LineItem` (v1 only)
+
+**Payment Processing:**
+- `Payload\PaymentLink`
+- `Payload\PaymentActivation` (v1 only)
+- `Payload\PaymentAllocation`
+- `Payload\Intent`
+
+**Business Entities:**
+- `Payload\Profile`
+- `Payload\Entity`
+- `Payload\Stakeholder`
+- `Payload\ProcessingAgreement`
+- `Payload\ProcessingRule`
+- `Payload\ProcessingSettings`
+
+**Transfers & Operations:**
+- `Payload\Transfer`
+- `Payload\TransactionOperation`
+
+**Payment Methods:**
+- `Payload\Card` (v1 only)
+- `Payload\BankAccount` (v1 only)
+- `Payload\CheckFront`
+- `Payload\CheckBack`
+
+**Other:**
+- `Payload\Webhook`
+- `Payload\AccessToken`
+- `Payload\ClientToken`
+- `Payload\OAuthToken`
 
 ## Documentation
 

@@ -44,13 +44,21 @@ class ARMRequest {
         curl_setopt($req, CURLOPT_USERPWD, API::$api_key . ':');
         curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
 
+        $headers = array();
+
         if (isset($args['json'])) {
            $json = json_encode($args['json']);
            curl_setopt($req, CURLOPT_POSTFIELDS, $json);
-           curl_setopt($req, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: '.strlen($json)
-           ));
+           $headers[] = 'Content-Type: application/json';
+           $headers[] = 'Content-Length: '.strlen($json);
+        }
+
+        if (isset(API::$api_version)) {
+           $headers[] = 'X-API-Version: '.API::$api_version;
+        }
+
+        if (count($headers) > 0) {
+           curl_setopt($req, CURLOPT_HTTPHEADER, $headers);
         }
 
         $resp    = curl_exec($req);

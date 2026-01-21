@@ -4,11 +4,10 @@ use PHPUnit\Framework\TestCase;
 use Payload\API as pl;
 use Test\Fixtures as fixtures;
 
-include_once('Fixtures.php');
+require_once 'Fixtures.php';
 
 final class TransactionTest extends TestCase
 {
-
     protected $customer_accnt;
     protected $processing_accnt;
     protected $card_payment;
@@ -20,7 +19,6 @@ final class TransactionTest extends TestCase
         $this->customer_accnt = fixtures::customer_accnt_data();
         $this->processing_accnt = fixtures::processing_accnt_data();
         $this->card_payment = fixtures::card_payment_data();
-
     }
 
 
@@ -29,15 +27,24 @@ final class TransactionTest extends TestCase
         $str = rand();
         $rand_description = sha1($str);
 
-        $payment = Payload\Transaction::create(array(
-            'amount' => 100.0,
-            'type' => 'payment',
-            'description' => $rand_description,
-            'payment_method' => new Payload\PaymentMethod(array(
-                'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
-            )),
-        ));
+        $payment = Payload\Transaction::create(
+            [
+                'amount'         => 100.0,
+                'type'           => 'payment',
+                'description'    => $rand_description,
+                'payment_method' => new Payload\PaymentMethod(
+                    [
+                        'type'            => 'card',
+                        'card'            => [
+                            'card_number' => '4242 4242 4242 4242',
+                            'expiry'      => '12/30',
+                            'card_code'   => '123',
+                        ],
+                        'billing_address' => ['postal_code' => '12345'],
+                    ]
+                ),
+            ]
+        );
 
         $payments = Payload\Transaction::filter_by(
             pl::attr()->amount->gt(99),
@@ -60,24 +67,35 @@ final class TransactionTest extends TestCase
 
     public function test_unified_payout_batching()
     {
-        Payload\Transaction::create(array(
-            'type' => 'refund',
-            'amount' => 10,
-            'payment_method' => new Payload\PaymentMethod(array(
-                'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
-            )),
-            'processing_id' => $this->processing_accnt->id
-        ));
+        Payload\Transaction::create(
+            [
+                'type'           => 'refund',
+                'amount'         => 10,
+                'payment_method' => new Payload\PaymentMethod(
+                    [
+                        'type'            => 'card',
+                        'card'            => [
+                            'card_number' => '4242 4242 4242 4242',
+                            'expiry'      => '12/30',
+                            'card_code'   => '123',
+                        ],
+                        'billing_address' => ['postal_code' => '12345'],
+                    ]
+                ),
+                'processing_id'  => $this->processing_accnt->id,
+            ]
+        );
 
 
         $transactions = Payload\Transaction::select(
             '*',
             'ledger'
-        )->filter_by(array(
-            'type' => 'refund',
-            'processing_id' => $this->processing_accnt->id
-        ))->all();
+        )->filter_by(
+            [
+                'type'          => 'refund',
+                'processing_id' => $this->processing_accnt->id,
+            ]
+        )->all();
 
         $this->assertEquals(1, count($transactions));
         $this->assertEquals($this->processing_accnt->id, $transactions[0]->processing_id);
@@ -85,24 +103,33 @@ final class TransactionTest extends TestCase
 
     public function test_get_transactions()
     {
-        Payload\Transaction::create(array(
-            'type' => 'payment',
-            'amount' => 10,
-            'payment_method' => new Payload\PaymentMethod(array(
-                'type' => 'card',
-                'card' => array('card_number' => '4242 4242 4242 4242', 'expiry' => '12/30')
-            ))
-        ));
-        $payments = Payload\Transaction::filter_by(array('status' => 'processed', 'type' => 'payment'))->all();
+        Payload\Transaction::create(
+            [
+                'type'           => 'payment',
+                'amount'         => 10,
+                'payment_method' => new Payload\PaymentMethod(
+                    [
+                        'type'            => 'card',
+                        'card'            => [
+                            'card_number' => '4242 4242 4242 4242',
+                            'expiry'      => '12/30',
+                            'card_code'   => '123',
+                        ],
+                        'billing_address' => ['postal_code' => '12345'],
+                    ]
+                ),
+            ]
+        );
+        $payments = Payload\Transaction::filter_by(['status' => 'processed', 'type' => 'payment'])->all();
         $this->assertGreaterThan(0, count($payments));
     }
 
     public function test_risk_flag()
     {
-        $payments = Payload\Transaction::filter_by(array(
-            'risk_flag' => 'allowed'
-        ))->all();
-        
+        $payments = Payload\Transaction::filter_by(
+            ['risk_flag' => 'allowed']
+        )->all();
+
         $this->assertEquals('allowed', $payments[0]->risk_flag);
     }
 
@@ -110,13 +137,13 @@ final class TransactionTest extends TestCase
     {
         $transaction = Payload\Transaction::filter_by(
             pl::attr()->id->eq($this->card_payment->id)
-        )->update(array('status' => 'processed'));
+        )->update(['status' => 'processed']);
+        $this->assertEquals('processed', $transaction[0]->status);
     }
 
     public function test_transactions_not_found()
     {
         $this->expectException(Payload\Exceptions\NotFound::class);
         $transaction = Payload\Transaction::get('invalid');
-
     }
 }
