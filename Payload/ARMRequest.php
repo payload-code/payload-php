@@ -10,13 +10,16 @@ class ARMRequest {
         $this->filters = array();
         $this->attrs = array();
         $this->group_by = array();
+        $this->order_by = array();
     }
 
     function request($method, $args=array()) {
         if ( isset($this->cls::$spec['endpoint']) )
             $endpoint = $this->cls::$spec['endpoint'];
-        else
-            $endpoint = '/'.$this->cls::$spec['object'] . 's';
+        else {
+            $object = $this->cls::$spec['object'];
+            $endpoint = '/'.$object . (substr($object, -1) === 's' ? '' : 's');
+        }
 
         if (isset($args['id']))
             $endpoint .= '/'.$args['id'];
@@ -29,12 +32,30 @@ class ARMRequest {
             }, $this->attrs);
 
         if (count($this->group_by))
-            $params['fields'] = array_map(function ($item) {
+            $params['group_by'] = array_map(function ($item) {
                 return strval($item);
             }, $this->group_by);
 
+        if (count($this->order_by))
+            $params['order_by'] = array_map(function ($item) {
+                return strval($item);
+            }, $this->order_by);
+
+        if (isset($this->limit))
+            $params['limit'] = $this->limit;
+
+        if (isset($this->offset))
+            $params['offset'] = $this->offset;
+
         if (isset($args['mode']))
             $params['mode'] = $args['mode'];
+
+        if ($this->cls::$default_params) {
+            foreach ($this->cls::$default_params as $k => $v) {
+                if (!isset($params[$k]))
+                    $params[$k] = $v;
+            }
+        }
 
         if (count($params))
             $endpoint .= '?'.http_build_query($params, '', '&');
@@ -82,9 +103,10 @@ class ARMRequest {
         }
 
         if ( $result['object'] == 'error' ) {
-            foreach( Utils::subclasses(Exceptions\PayloadError::class) as $exc ) {
-                if ( $exc::getClassName() != $result['error_type']) continue;
-                throw new $exc($result['error_description'], $result);
+            foreach( get_declared_classes() as $cls ) {
+                if ( !is_subclass_of($cls, Exceptions\PayloadError::class) ) continue;
+                if ( $cls::getClassName() != $result['error_type']) continue;
+                throw new $cls($result['error_description'], $result);
             }
             throw new Exceptions\BadRequest($result['error_description'], $result);
         }
@@ -104,6 +126,21 @@ class ARMRequest {
 
     public function group_by(...$attrs) {
         $this->group_by = array_merge($this->group_by, $attrs);
+        return $this;
+    }
+
+    public function order_by(...$attrs) {
+        $this->order_by = array_merge($this->order_by, $attrs);
+        return $this;
+    }
+
+    public function limit($limit) {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    public function offset($offset) {
+        $this->offset = $offset;
         return $this;
     }
 

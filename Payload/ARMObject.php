@@ -5,8 +5,24 @@ require_once('ARMRequest.php');
 
 class ARMObject {
     private static $_object_cache = array();
+    private static $_registry = array();
     public static $spec = array();
+    public static $default_params = null;
     public static $type = null;
+
+    public static function getRegistry() {
+        if (empty(self::$_registry)) {
+            foreach (glob(__DIR__ . '/*.php') as $file) {
+                require_once($file);
+            }
+            foreach (get_declared_classes() as $class) {
+                if (is_subclass_of($class, self::class) && isset($class::$spec['object'])) {
+                    self::$_registry[$class::$spec['object']] = $class;
+                }
+            }
+        }
+        return self::$_registry;
+    }
 
     public static function new($data) {
         $class = get_called_class();
@@ -21,6 +37,15 @@ class ARMObject {
     function __construct($data) {
         if ($data !== null)
             $this->data($data);
+    }
+
+    private static function _build_request($apply_polymorphic=false) {
+        $filters = array();
+        if ( $apply_polymorphic && isset(get_called_class()::$spec['polymorphic_type']) )
+            array_push($filters, ['type' => get_called_class()::$spec['polymorphic_type']]);
+
+        $req = new ARMRequest(get_called_class());
+        return call_user_func_array(array($req, 'filter_by'), $filters);
     }
 
     public function __get($name) {
@@ -46,29 +71,30 @@ class ARMObject {
     }
 
     public function update($update) {
-        return (new ARMRequest(get_called_class()))->request('put',
+        return $this->_build_request()->request('put',
             array('id'=>$this->id, 'json'=>$update));
     }
 
     public function delete($update=null) {
         if ($update !== null){
-            return (new ARMRequest(get_called_class()))->request('delete',
+            return $this->_build_request()->request('delete',
             array('id'=>$update->id));
         } else {
-            return (new ARMRequest(get_called_class()))->request('delete',
+            return $this->_build_request()->request('delete',
                 array('id'=>$this->id));
         }
     }
 
     public static function get($id) {
-        return (new ARMRequest(get_called_class()))->get($id);
+        return self::_build_request()->get($id);
+    }
+
+    public static function all() {
+        return self::_build_request()->all();
     }
 
     public static function filter_by(...$filters) {
-        if ( isset(get_called_class()::$spec['polymorphic_type']) )
-            array_push($filters, ['type' => get_called_class()::$spec['polymorphic_type']]);
-
-        $req = new ARMRequest(get_called_class());
+        $req = self::_build_request(true);
         return call_user_func_array(array($req, 'filter_by'), $filters);
     }
 
@@ -76,12 +102,25 @@ class ARMObject {
         if ( isset(get_called_class()::$spec['polymorphic_type']) )
             $obj['type'] = get_called_class()::$spec['polymorphic_type'];
 
-        return (new ARMRequest(get_called_class()))->create($obj);
+        return self::_build_request()->create($obj);
     }
 
     public static function select(...$attrs) {
-        $req = new ARMRequest(get_called_class());
+        $req = self::_build_request(true);
         return call_user_func_array(array($req, 'select'), $attrs);
+    }
+
+    public static function order_by(...$attrs) {
+        $req = self::_build_request(true);
+        return call_user_func_array(array($req, 'order_by'), $attrs);
+    }
+
+    public static function limit($limit) {
+        return self::_build_request(true)->limit($limit);
+    }
+
+    public static function offset($offset) {
+        return self::_build_request(true)->offset($offset);
     }
 
     public static function delete_all(...$objs) {
@@ -90,7 +129,7 @@ class ARMObject {
             return $value->id;
         };
 
-        return (new ARMRequest(get_called_class()))->request('delete',
+        return self::_build_request()->request('delete',
             array('id'=>join("|",array_map($func, $objs))));
     }
 }
