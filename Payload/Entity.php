@@ -3,7 +3,7 @@ namespace Payload;
 
 require_once('ARMObject.php');
 
-class Entity extends ARMObject {
-    public static $spec = array('object'=>'entity', 'endpoint'=>'/entities');
+class Entity extends ARMObject
+{
+    public static $spec = ['object'=>'entity', 'endpoint'=>'/entities'];
 }
-?>

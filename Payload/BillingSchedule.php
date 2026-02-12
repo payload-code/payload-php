@@ -3,7 +3,7 @@ namespace Payload;
 
 require_once('ARMObject.php');
 
-class BillingSchedule extends ARMObject {
-    public static $spec = array('object'=>'billing_schedule');
+class BillingSchedule extends ARMObject
+{
+    public static $spec = ['object'=>'billing_schedule'];
 }
-?>

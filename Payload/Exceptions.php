@@ -10,4 +10,3 @@ require(dirname(__FILE__) . '/Exceptions/ServiceUnavailable.php');
 require(dirname(__FILE__) . '/Exceptions/TooManyRequests.php');
 require(dirname(__FILE__) . '/Exceptions/Unauthorized.php');
 require(dirname(__FILE__) . '/Exceptions/UnknownResponse.php');
-?>
