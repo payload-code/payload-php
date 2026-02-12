@@ -3,18 +3,21 @@ namespace Payload;
 
 use Payload\Utils;
 
-include('Exceptions.php');
+require_once('Exceptions.php');
 
 class ARMRequest
 {
+    protected $cls;
+    protected $filters = [];
+    protected $attrs = [];
+    protected $group_by = [];
+    protected $order_by = [];
+    protected $limit = null;
+    protected $offset = null;
 
     function __construct($cls)
     {
         $this->cls = $cls;
-        $this->filters = [];
-        $this->attrs = [];
-        $this->group_by = [];
-        $this->order_by = [];
     }
 
     function request($method, $args = [])
@@ -96,7 +99,7 @@ class ARMRequest
             curl_setopt($req, CURLOPT_HTTPHEADER, $headers);
         }
 
-        $resp    = curl_exec($req);
+        $resp = curl_exec($req);
         $status_code = curl_getinfo($req, CURLINFO_HTTP_CODE);
         curl_close($req);
 
@@ -206,8 +209,10 @@ class ARMRequest
 
     public function filter_by(...$filters)
     {
-        $filters = call_user_func_array('array_merge', $filters);
-        $this->filters = array_merge($filters, $this->filters);
+        if (count($filters)) {
+            $filters = call_user_func_array('array_merge', $filters);
+            $this->filters = array_merge($filters, $this->filters);
+        }
         return $this;
     }
 

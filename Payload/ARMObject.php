@@ -9,7 +9,6 @@ class ARMObject
     private static $_registry = [];
     public static $spec = [];
     public static $default_params = null;
-    public static $type = null;
 
     public static function getRegistry()
     {
@@ -44,15 +43,14 @@ class ARMObject
         }
     }
 
-    private static function _build_request($apply_polymorphic = false)
+    private static function _build_request($cls = null, $apply_polymorphic = false)
     {
-        $filters = [];
-        if ($apply_polymorphic && isset(get_called_class()::$spec['polymorphic_type'])) {
-            array_push($filters, ['type' => get_called_class()::$spec['polymorphic_type']]);
+        $cls = $cls ?: get_called_class();
+        $req = new ARMRequest($cls);
+        if ($apply_polymorphic && isset($cls::$spec['polymorphic_type'])) {
+            $req->filter_by(['type' => $cls::$spec['polymorphic_type']]);
         }
-
-        $req = new ARMRequest(get_called_class());
-        return call_user_func_array([$req, 'filter_by'], $filters);
+        return $req;
     }
 
     public function __get($name)
@@ -84,7 +82,7 @@ class ARMObject
 
     public function update($update)
     {
-        return $this->_build_request()->request(
+        return static::_build_request(static::class)->request(
             'put',
             ['id'=>$this->id, 'json'=>$update]
         );
@@ -93,12 +91,12 @@ class ARMObject
     public function delete($update = null)
     {
         if ($update !== null) {
-            return $this->_build_request()->request(
+            return static::_build_request(static::class)->request(
                 'delete',
                 ['id'=>$update->id]
             );
         } else {
-            return $this->_build_request()->request(
+            return static::_build_request(static::class)->request(
                 'delete',
                 ['id'=>$this->id]
             );
@@ -107,17 +105,17 @@ class ARMObject
 
     public static function get($id)
     {
-        return self::_build_request()->get($id);
+        return static::_build_request()->get($id);
     }
 
     public static function all()
     {
-        return self::_build_request()->all();
+        return static::_build_request()->all();
     }
 
     public static function filter_by(...$filters)
     {
-        $req = self::_build_request(true);
+        $req = static::_build_request(null, true);
         return call_user_func_array([$req, 'filter_by'], $filters);
     }
 
@@ -127,39 +125,38 @@ class ARMObject
             $obj['type'] = get_called_class()::$spec['polymorphic_type'];
         }
 
-        return self::_build_request()->create($obj);
+        return static::_build_request()->create($obj);
     }
 
     public static function select(...$attrs)
     {
-        $req = self::_build_request(true);
+        $req = static::_build_request(null, true);
         return call_user_func_array([$req, 'select'], $attrs);
     }
 
     public static function order_by(...$attrs)
     {
-        $req = self::_build_request(true);
+        $req = static::_build_request(null, true);
         return call_user_func_array([$req, 'order_by'], $attrs);
     }
 
     public static function limit($limit)
     {
-        return self::_build_request(true)->limit($limit);
+        return static::_build_request(null, true)->limit($limit);
     }
 
     public static function offset($offset)
     {
-        return self::_build_request(true)->offset($offset);
+        return static::_build_request(null, true)->offset($offset);
     }
 
     public static function delete_all(...$objs)
     {
-
         $func = function ($value) {
             return $value->id;
         };
 
-        return self::_build_request()->request(
+        return static::_build_request()->request(
             'delete',
             ['id'=>join("|", array_map($func, $objs))]
         );

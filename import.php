@@ -13,6 +13,7 @@ require(dirname(__FILE__) . '/Payload/Invoice.php');
 require(dirname(__FILE__) . '/Payload/BillingSchedule.php');
 require(dirname(__FILE__) . '/Payload/BillingCharge.php');
 require(dirname(__FILE__) . '/Payload/LineItem.php');
+require(dirname(__FILE__) . '/Payload/Ledger.php');
 require(dirname(__FILE__) . '/Payload/Webhook.php');
 require(dirname(__FILE__) . '/Payload/WebhookLog.php');
 require(dirname(__FILE__) . '/Payload/PaymentActivation.php');
