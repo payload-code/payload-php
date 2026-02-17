@@ -66,4 +66,9 @@ class Attr
     {
         return $this->eq('?*'.$val.'*');
     }
+
+    public function in(...$vals)
+    {
+        return $this->eq(implode('|', $vals));
+    }
 }
