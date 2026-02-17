@@ -27,7 +27,7 @@ class Attr
         if ($this->is_method) {
             return $this->param . '(' . $this->parent->key . ')';
         }
-        return $this->key;
+        return $this->key ?? '';
     }
 
     public function eq($val)
