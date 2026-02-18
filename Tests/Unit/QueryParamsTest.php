@@ -208,28 +208,29 @@ final class QueryParamsTest extends TestCase
 
     public function test_default_params_applied()
     {
-        $original = Payload\Customer::$default_params;
-        Payload\Customer::$default_params = ['limit' => 100];
+        $original = Payload\Customer::getDefaultParams();
+        Payload\Customer::setDefaultParams(['limit' => 100]);
+        $this->assertEquals([], Payload\Account::getDefaultParams());
 
         Payload\Customer::filter_by(['status' => 'active'])->all();
 
         $params = $this->getQueryParams();
         $this->assertEquals(100, $params['limit']);
 
-        Payload\Customer::$default_params = $original;
+        Payload\Customer::setDefaultParams($original);
     }
 
     public function test_default_params_do_not_override_explicit()
     {
-        $original = Payload\Customer::$default_params;
-        Payload\Customer::$default_params = ['limit' => 100];
+        $original = Payload\Customer::getDefaultParams();
+        Payload\Customer::setDefaultParams(['limit' => 100]);
 
         Payload\Customer::limit(5)->all();
 
         $params = $this->getQueryParams();
         $this->assertEquals(5, $params['limit']);
 
-        Payload\Customer::$default_params = $original;
+        Payload\Customer::setDefaultParams($original);
     }
 
     // --- no params when not set ---

@@ -65,8 +65,9 @@ class ARMRequest
             $params['mode'] = $args['mode'];
         }
 
-        if ($this->cls::$default_params) {
-            foreach ($this->cls::$default_params as $k => $v) {
+        $defaults = $this->cls::getDefaultParams();
+        if ($defaults) {
+            foreach ($defaults as $k => $v) {
                 if (!isset($params[$k])) {
                     $params[$k] = $v;
                 }

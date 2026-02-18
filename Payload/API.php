@@ -5,7 +5,7 @@ require_once('Attr.php');
 
 class API
 {
-    const version = '0.4.0';
+    const version = '1.0.0';
     public static $api_key;
     public static $api_url = 'https://api.payload.com';
     public static $api_version;

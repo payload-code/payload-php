@@ -8,7 +8,15 @@ class ARMObject
     private static $_object_cache = [];
     private static $_registry = [];
     public static $spec = [];
-    public static $default_params = null;
+    private static $_default_params = [];
+
+    public static function setDefaultParams($params) {
+        self::$_default_params[get_called_class()] = $params;
+    }
+
+    public static function getDefaultParams() {
+        return self::$_default_params[get_called_class()] ?? [];
+    }
 
     public static function getRegistry()
     {
