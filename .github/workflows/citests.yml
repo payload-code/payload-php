@@ -18,7 +18,9 @@ jobs:
         extensions: xml, curl, dom, mbstring
     - name: Install Composer dependencies
       run: composer install
-    - name: Running unit test
-      run: ./vendor/bin/phpunit Tests
+    - name: Running unit tests
+      run: ./vendor/bin/phpunit Tests/Unit
+    - name: Running integration tests
+      run: ./vendor/bin/phpunit Tests/Int
       env:
         API_KEY: ${{ secrets.API_KEY }}

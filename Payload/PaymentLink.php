@@ -3,7 +3,7 @@ namespace Payload;
 
 require_once('ARMObject.php');
 
-class PaymentLink extends ARMObject {
-    public static $spec = array('object'=>'payment_link');
+class PaymentLink extends ARMObject
+{
+    public static $spec = ['object'=>'payment_link'];
 }
-?>
